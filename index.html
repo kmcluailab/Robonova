@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robonova AI 3 - Humanoid Robot Platform</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #283593;
+      color: white;
+      padding: 20px 20px 20px 100px;
+      text-align: center;
+      position: relative;
+      animation: slideInDown 1s ease;
+    }
+
+    header img.logo {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      height: 80px;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 2em;
+      background-color: #ffffff;
+      animation: fadeIn 1.5s ease-in;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      margin: 20px auto;
+      border-radius: 10px;
+      border: 4px solid #ddd;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #1a237e;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 10px 0;
+      transition: background-color 0.3s ease;
+    }
+
+    li:hover {
+      background-color: #f0f4ff;
+      padding-left: 5px;
+    }
+
+    .toggle {
+      cursor: pointer;
+      color: #3949ab;
+      text-decoration: underline;
+      margin: 15px 0;
+      display: inline-block;
+    }
+
+    .content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease-out;
+    }
+
+    .content.open {
+      max-height: 1500px;
+      transition: max-height 0.9s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+  <script>
+    function toggleSection(id) {
+      const section = document.getElementById(id);
+      section.classList.toggle('open');
+    }
+  </script>
+</head>
+<body>
+
+<header>
+  <img src="Khwaja_Moinuddin_Chishti_Language_University_logo.png" alt="University Logo" class="logo">
+  <h1>Robonova AI 3 - Humanoid Robot Platform</h1>
+  <p>Khwaja Moinuddin Chishti Language University, Lucknow </p>
+</header>
+
+<main>
+  <img src="RoBonova.jpg" alt="Robonova AI 3 Robot">
+
+  <section>
+    <h2>Overview</h2>
+    <p>Robonova AI 3 is an advanced humanoid robot developed by Scientech. It is designed for educational, research, and prototyping purposes. Featuring 17 servo motors and embedded AI processing capabilities, this robot can perform complex movements and tasks such as object tracking, obstacle avoidance, and interactive demonstrations.</p>
+  </section>
+
+  <section>
+    <h2>Hardware Specifications</h2>
+    <ul>
+      <li><strong>Robot Body:</strong> 16-joint bipedal structure with high-grade aluminum parts</li>
+      <li><strong>Servo Motors:</strong> 17 x HSR-8498 digital servos</li>
+      <li><strong>Controller Board:</strong> MR-C3024, controls up to 32 servos</li>
+      <li><strong>Processor:</strong> Amlogic Cortex-A53 Quad-Core 1.5GHz with Mali-450 GPU</li>
+      <li><strong>Memory:</strong> 2GB DDR3 SDRAM</li>
+      <li><strong>Camera:</strong> Full HD 1920x1080 camera module</li>
+      <li><strong>Connectivity:</strong> Bluetooth, Gigabit Ethernet, HDMI 2.0, 40-pin GPIO</li>
+      <li><strong>Power:</strong> 2900mAh Li-ion rechargeable battery</li>
+      <li><strong>Weight/Size:</strong> 1.3 kg, 310 x 180 x 90 mm</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="toggle" onclick="toggleSection('software')">Software & AI Capabilities (Click to Expand)</h2>
+    <div id="software" class="content">
+      <ul>
+        <li><strong>Programming Languages:</strong> ROBOBASIC v2.6 and ROBOSCRIPT</li>
+        <li><strong>AI Tools:</strong> OpenCV 3.4.2 for computer vision</li>
+        <li><strong>OS:</strong> Ubuntu 16.04 with Linux kernel</li>
+        <li><strong>Capabilities:</strong> Object tracking, color and shape recognition, obstacle avoidance</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="toggle" onclick="toggleSection('applications')">Applications (Click to Expand)</h2>
+    <div id="applications" class="content">
+      <ul>
+        <li><strong>Education:</strong> Teaching AI, robotics, embedded systems</li>
+        <li><strong>Research:</strong> Human-robot interaction, gait analysis</li>
+        <li><strong>Competitions:</strong> Tech expos, robotics events</li>
+        <li><strong>Prototyping:</strong> Testing AI models, sensor integration</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Advantages</h2>
+    <ul>
+      <li>Integrated AI and vision system</li>
+      <li>Supports multiple programming languages</li>
+      <li>Compact, wireless, and portable design</li>
+      <li>High-quality mechanical build and servos</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Limitations</h2>
+    <ul>
+      <li>Relatively high cost</li>
+      <li>Limited battery backup</li>
+      <li>Older software (Ubuntu 16.04)</li>
+      <li>Steep learning curve for advanced tasks</li>
+      <li>Proprietary components harder to replace</li>
+    </ul>
+  </section>
+
+</main>
+
+</body>
+</html>

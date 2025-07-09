@@ -1,0 +1,45 @@
+{
+  "project": {
+    "name": "Robonova AI 3 - Humanoid Robot Platform",
+    "description": "A web-based educational and research interface for Scientech’s Robonova AI 3 humanoid robot with AI and computer vision capabilities.",
+    "version": "1.0.0",
+    "author": {
+      "name": "Akash Gupta",
+      "github": "https://github.com/saysky2",
+      "linkedin": "https://www.linkedin.com/in/saysky2"
+    },
+    "files": [
+      "index.html",
+      "RoBonova.jpg",
+      "README.md",
+      "project.json"
+    ],
+    "features": [
+      "Real-time robot hardware overview",
+      "Expandable sections with animations",
+      "AI integration: object tracking, shape recognition",
+      "Educational and research applications"
+    ],
+    "technologies": [
+      "HTML5",
+      "CSS3",
+      "JavaScript",
+      "OpenCV",
+      "Ubuntu Linux"
+    ],
+    "usage": [
+      "Educational Institutions",
+      "Research Labs",
+      "Robotics Competitions",
+      "Prototyping Environments"
+    ],
+    "hosting": {
+      "recommended": [
+        "GitHub Pages",
+        "Netlify",
+        "Vercel"
+      ]
+    },
+    "license": "MIT"
+  }
+}
