@@ -6,16 +6,61 @@
   <title>Robonova AI 3 - Humanoid Robot Platform</title>
   <link rel="icon" type="image/png" href="Khwaja_Moinuddin_Chishti_Language_University_logo.png" />
   <style>
+    :root {
+      --bg-color: #f5f7fa;
+      --text-color: #333;
+      --header-bg: #283593;
+      --main-bg: #ffffff;
+      --border-color: #ddd;
+      --hover-bg: #f0f4ff;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #1a1a1a;
+      --text-color: #e0e0e0;
+      --header-bg: #1e1e2e;
+      --main-bg: #2d2d2d;
+      --border-color: #444;
+      --hover-bg: #3a3a3a;
+      --shadow: rgba(255, 255, 255, 0.1);
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f5f7fa;
+      background: var(--bg-color);
       margin: 0;
       padding: 0;
-      color: #333;
+      color: var(--text-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .theme-toggle, .lang-select {
+      background: var(--main-bg);
+      color: var(--text-color);
+      border: 2px solid var(--border-color);
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover, .lang-select:hover {
+      background: var(--hover-bg);
     }
 
     header {
-      background-color: #283593;
+      background-color: var(--header-bg);
       color: white;
       padding: 20px 20px 20px 100px;
       text-align: center;
@@ -34,8 +79,11 @@
       max-width: 1200px;
       margin: auto;
       padding: 2em;
-      background-color: #ffffff;
+      background-color: var(--main-bg);
       animation: fadeIn 1.5s ease-in;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 4px 10px var(--shadow);
     }
 
     img {
@@ -43,12 +91,16 @@
       display: block;
       margin: 20px auto;
       border-radius: 10px;
-      border: 4px solid #ddd;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border: 4px solid var(--border-color);
+      box-shadow: 0 4px 10px var(--shadow);
     }
 
     h2 {
       color: #1a237e;
+    }
+
+    [data-theme="dark"] h2 {
+      color: #7986cb;
     }
 
     ul {
@@ -61,7 +113,7 @@
     }
 
     li:hover {
-      background-color: #f0f4ff;
+      background-color: var(--hover-bg);
       padding-left: 5px;
     }
 
@@ -73,6 +125,10 @@
       display: inline-block;
     }
 
+    [data-theme="dark"] .toggle {
+      color: #7986cb;
+    }
+
     .content {
       max-height: 0;
       overflow: hidden;
@@ -82,6 +138,27 @@
     .content.open {
       max-height: 1500px;
       transition: max-height 0.9s ease-in;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: var(--header-bg);
+      color: white;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: #7986cb;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .lang-hidden {
+      display: none;
     }
 
     @keyframes fadeIn {
@@ -99,27 +176,89 @@
       const section = document.getElementById(id);
       section.classList.toggle('open');
     }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+    }
+
+    function changeLanguage(lang) {
+      // Hide all language elements
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.classList.add('lang-hidden');
+      });
+      
+      // Show selected language elements
+      document.querySelectorAll(`[data-lang="${lang}"]`).forEach(el => {
+        el.classList.remove('lang-hidden');
+      });
+      
+      // Update document language
+      document.documentElement.lang = lang;
+      localStorage.setItem('language', lang);
+    }
+
+    // Initialize theme and language on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      const savedLang = localStorage.getItem('language') || 'en';
+      
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      const themeButton = document.querySelector('.theme-toggle');
+      themeButton.textContent = savedTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+      
+      changeLanguage(savedLang);
+      document.querySelector('.lang-select').value = savedLang;
+    });
   </script>
 </head>
 <body>
 
+<div class="controls">
+  <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
+  <select class="lang-select" onchange="changeLanguage(this.value)">
+    <option value="en">English</option>
+    <option value="hi">हिंदी</option>
+    <option value="ur">اردو</option>
+  </select>
+</div>
+
 <header>
   <img src="Khwaja_Moinuddin_Chishti_Language_University_logo.png" alt="University Logo" class="logo">
-  <h1>Robonova AI 3 - Humanoid Robot Platform</h1>
-  <p>Khwaja Moinuddin Chishti Language University, Lucknow </p>
+  <h1 data-lang="en">Robonova AI 3 - Humanoid Robot Platform</h1>
+  <h1 data-lang="hi" class="lang-hidden">रोबोनोवा AI 3 - ह्यूमनॉइड रोबोट प्लेटफॉर्म</h1>
+  <h1 data-lang="ur" class="lang-hidden">روبونووا AI 3 - ہیومنائیڈ روبوٹ پلیٹ فارم</h1>
+  
+  <p data-lang="en">Khwaja Moinuddin Chishti Language University, Lucknow</p>
+  <p data-lang="hi" class="lang-hidden">ख्वाजा मोइनुद्दीन चिश्ती भाषा विश्वविद्यालय, लखनऊ</p>
+  <p data-lang="ur" class="lang-hidden">خواجہ معین الدین چشتی لینگویج یونیورسٹی، لکھنؤ</p>
 </header>
 
 <main>
   <img src="RoBonova.jpg" alt="Robonova AI 3 Robot">
 
   <section>
-    <h2>Overview</h2>
-    <p>Robonova AI 3 is an advanced humanoid robot developed by Scientech. It is designed for educational, research, and prototyping purposes. Featuring 17 servo motors and embedded AI processing capabilities, this robot can perform complex movements and tasks such as object tracking, obstacle avoidance, and interactive demonstrations.</p>
+    <h2 data-lang="en">Overview</h2>
+    <h2 data-lang="hi" class="lang-hidden">अवलोकन</h2>
+    <h2 data-lang="ur" class="lang-hidden">جائزہ</h2>
+    
+    <p data-lang="en">Robonova AI 3 is an advanced humanoid robot developed by Scientech. It is designed for educational, research, and prototyping purposes. Featuring 17 servo motors and embedded AI processing capabilities, this robot can perform complex movements and tasks such as object tracking, obstacle avoidance, and interactive demonstrations.</p>
+    <p data-lang="hi" class="lang-hidden">रोबोनोवा AI 3 साइंटेक द्वारा विकसित एक उन्नत ह्यूमनॉइड रोबोट है। यह शैक्षणिक, अनुसंधान और प्रोटोटाइपिंग उद्देश्यों के लिए डिज़ाइन किया गया है। 17 सर्वो मोटर्स और एम्बेडेड AI प्रोसेसिंग क्षमताओं के साथ, यह रोबोट जटिल गतिविधियों और कार्यों जैसे ऑब्जेक्ट ट्रैकिंग, बाधा से बचना और इंटरैक्टिव प्रदर्शन कर सकता है।</p>
+    <p data-lang="ur" class="lang-hidden">روبونووا AI 3 سائنٹیک کی طرف سے تیار کردہ ایک ایڈوانس ہیومنائیڈ روبوٹ ہے۔ یہ تعلیمی، تحقیقی اور پروٹوٹائپنگ مقاصد کے لیے ڈیزائن کیا گیا ہے۔ 17 سرو موٹرز اور ایمبیڈیڈ AI پروسیسنگ صلاحیات کے ساتھ، یہ روبوٹ پیچیدہ حرکات اور کام جیسے آبجیکٹ ٹریکنگ، رکاوٹ سے بچنا اور انٹرایکٹو مظاہرے کر سکتا ہے۔</p>
   </section>
 
   <section>
-    <h2>Hardware Specifications</h2>
-    <ul>
+    <h2 data-lang="en">Hardware Specifications</h2>
+    <h2 data-lang="hi" class="lang-hidden">हार्डवेयर विनिर्देश</h2>
+    <h2 data-lang="ur" class="lang-hidden">ہارڈویئر کی تفصیلات</h2>
+    
+    <ul data-lang="en">
       <li><strong>Robot Body:</strong> 16-joint bipedal structure with high-grade aluminum parts</li>
       <li><strong>Servo Motors:</strong> 17 x HSR-8498 digital servos</li>
       <li><strong>Controller Board:</strong> MR-C3024, controls up to 32 servos</li>
@@ -130,58 +269,166 @@
       <li><strong>Power:</strong> 2900mAh Li-ion rechargeable battery</li>
       <li><strong>Weight/Size:</strong> 1.3 kg, 310 x 180 x 90 mm</li>
     </ul>
+    
+    <ul data-lang="hi" class="lang-hidden">
+      <li><strong>रोबोट बॉडी:</strong> उच्च-ग्रेड एल्यूमीनियम भागों के साथ 16-जोड़ द्विपाद संरचना</li>
+      <li><strong>सर्वो मोटर्स:</strong> 17 x HSR-8498 डिजिटल सर्वो</li>
+      <li><strong>कंट्रोलर बोर्ड:</strong> MR-C3024, 32 सर्वो तक नियंत्रित करता है</li>
+      <li><strong>प्रोसेसर:</strong> Amlogic Cortex-A53 Quad-Core 1.5GHz Mali-450 GPU के साथ</li>
+      <li><strong>मेमोरी:</strong> 2GB DDR3 SDRAM</li>
+      <li><strong>कैमरा:</strong> Full HD 1920x1080 कैमरा मॉड्यूल</li>
+      <li><strong>कनेक्टिविटी:</strong> Bluetooth, Gigabit Ethernet, HDMI 2.0, 40-pin GPIO</li>
+      <li><strong>पावर:</strong> 2900mAh Li-ion रिचार्जेबल बैटरी</li>
+      <li><strong>वजन/आकार:</strong> 1.3 kg, 310 x 180 x 90 mm</li>
+    </ul>
+    
+    <ul data-lang="ur" class="lang-hidden">
+      <li><strong>روبوٹ باڈی:</strong> اعلیٰ درجے کے ایلومینیم حصوں کے ساتھ 16-جوائنٹ بائی پیڈل ڈھانچہ</li>
+      <li><strong>سرو موٹرز:</strong> 17 x HSR-8498 ڈیجیٹل سرو</li>
+      <li><strong>کنٹرولر بورڈ:</strong> MR-C3024، 32 سرو تک کنٹرول کرتا ہے</li>
+      <li><strong>پروسیسر:</strong> Amlogic Cortex-A53 Quad-Core 1.5GHz Mali-450 GPU کے ساتھ</li>
+      <li><strong>میموری:</strong> 2GB DDR3 SDRAM</li>
+      <li><strong>کیمرا:</strong> Full HD 1920x1080 کیمرا ماڈیول</li>
+      <li><strong>کنیکٹیویٹی:</strong> Bluetooth, Gigabit Ethernet, HDMI 2.0, 40-pin GPIO</li>
+      <li><strong>پاور:</strong> 2900mAh Li-ion ریچارج ایبل بیٹری</li>
+      <li><strong>وزن/سائز:</strong> 1.3 kg, 310 x 180 x 90 mm</li>
+    </ul>
   </section>
 
   <section>
-    <h2 class="toggle" onclick="toggleSection('software')">Software & AI Capabilities (Click to Expand)</h2>
+    <h2 class="toggle" data-lang="en" onclick="toggleSection('software')">Software & AI Capabilities (Click to Expand)</h2>
+    <h2 class="toggle" data-lang="hi" onclick="toggleSection('software')" class="lang-hidden">सॉफ़्टवेयर और AI क्षमताएं (विस्तार के लिए क्लिक करें)</h2>
+    <h2 class="toggle" data-lang="ur" onclick="toggleSection('software')" class="lang-hidden">سافٹ ویئر اور AI صلاحیات (تفصیل کے لیے کلک کریں)</h2>
+    
     <div id="software" class="content">
-      <ul>
+      <ul data-lang="en">
         <li><strong>Programming Languages:</strong> ROBOBASIC v2.6 and ROBOSCRIPT</li>
         <li><strong>AI Tools:</strong> OpenCV 3.4.2 for computer vision</li>
         <li><strong>OS:</strong> Ubuntu 16.04 with Linux kernel</li>
         <li><strong>Capabilities:</strong> Object tracking, color and shape recognition, obstacle avoidance</li>
       </ul>
-    </div>
-  </section>
-
-  <section>
-    <h2 class="toggle" onclick="toggleSection('applications')">Applications (Click to Expand)</h2>
-    <div id="applications" class="content">
-      <ul>
-        <li><strong>Education:</strong> Teaching AI, robotics, embedded systems</li>
-        <li><strong>Research:</strong> Human-robot interaction, gait analysis</li>
-        <li><strong>Competitions:</strong> Tech expos, robotics events</li>
-        <li><strong>Prototyping:</strong> Testing AI models, sensor integration</li>
+      
+      <ul data-lang="hi" class="lang-hidden">
+        <li><strong>प्रोग्रामिंग भाषाएं:</strong> ROBOBASIC v2.6 और ROBOSCRIPT</li>
+        <li><strong>AI उपकरण:</strong> कंप्यूटर विज़न के लिए OpenCV 3.4.2</li>
+        <li><strong>OS:</strong> Linux kernel के साथ Ubuntu 16.04</li>
+        <li><strong>क्षमताएं:</strong> ऑब्जेक्ट ट्रैकिंग, रंग और आकार पहचान, बाधा से बचना</li>
+      </ul>
+      
+      <ul data-lang="ur" class="lang-hidden">
+        <li><strong>پروگرامنگ لینگویجز:</strong> ROBOBASIC v2.6 اور ROBOSCRIPT</li>
+        <li><strong>AI ٹولز:</strong> کمپیوٹر ویژن کے لیے OpenCV 3.4.2</li>
+        <li><strong>OS:</strong> Linux kernel کے ساتھ Ubuntu 16.04</li>
+        <li><strong>صلاحیات:</strong> آبجیکٹ ٹریکنگ، رنگ اور شکل کی شناخت، رکاوٹ سے بچنا</li>
       </ul>
     </div>
   </section>
 
   <section>
-    <h2>Advantages</h2>
-    <ul>
+    <h2 class="toggle" data-lang="en" onclick="toggleSection('applications')">Applications (Click to Expand)</h2>
+    <h2 class="toggle" data-lang="hi" onclick="toggleSection('applications')" class="lang-hidden">अनुप्रयोग (विस्तार के लिए क्लिक करें)</h2>
+    <h2 class="toggle" data-lang="ur" onclick="toggleSection('applications')" class="lang-hidden">ایپلیکیشنز (تفصیل کے لیے کلک کریں)</h2>
+    
+    <div id="applications" class="content">
+      <ul data-lang="en">
+        <li><strong>Education:</strong> Teaching AI, robotics, embedded systems</li>
+        <li><strong>Research:</strong> Human-robot interaction, gait analysis</li>
+        <li><strong>Competitions:</strong> Tech expos, robotics events</li>
+        <li><strong>Prototyping:</strong> Testing AI models, sensor integration</li>
+      </ul>
+      
+      <ul data-lang="hi" class="lang-hidden">
+        <li><strong>शिक्षा:</strong> AI, रोबोटिक्स, एम्बेडेड सिस्टम सिखाना</li>
+        <li><strong>अनुसंधान:</strong> मानव-रोबोट इंटरैक्शन, गति विश्लेषण</li>
+        <li><strong>प्रतियोगिताएं:</strong> टेक एक्सपो, रोबोटिक्स इवेंट्स</li>
+        <li><strong>प्रोटोटाइपिंग:</strong> AI मॉडल परीक्षण, सेंसर एकीकरण</li>
+      </ul>
+      
+      <ul data-lang="ur" class="lang-hidden">
+        <li><strong>تعلیم:</strong> AI، روبوٹکس، ایمبیڈیڈ سسٹمز کی تعلیم</li>
+        <li><strong>تحقیق:</strong> انسان-روبوٹ تعامل، چال کا تجزیہ</li>
+        <li><strong>مقابلے:</strong> ٹیک ایکسپو، روبوٹکس ایونٹس</li>
+        <li><strong>پروٹوٹائپنگ:</strong> AI ماڈلز کی جانچ، سینسر انٹیگریشن</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-lang="en">Advantages</h2>
+    <h2 data-lang="hi" class="lang-hidden">लाभ</h2>
+    <h2 data-lang="ur" class="lang-hidden">فوائد</h2>
+    
+    <ul data-lang="en">
       <li>Integrated AI and vision system</li>
       <li>Supports multiple programming languages</li>
       <li>Compact, wireless, and portable design</li>
       <li>High-quality mechanical build and servos</li>
     </ul>
+    
+    <ul data-lang="hi" class="lang-hidden">
+      <li>एकीकृत AI और विज़न सिस्टम</li>
+      <li>कई प्रोग्रामिंग भाषाओं का समर्थन</li>
+      <li>कॉम्पैक्ट, वायरलेस और पोर्टेबल डिज़ाइन</li>
+      <li>उच्च गुणवत्ता मैकेनिकल बिल्ड और सर्वो</li>
+    </ul>
+    
+    <ul data-lang="ur" class="lang-hidden">
+      <li>مربوط AI اور ویژن سسٹم</li>
+      <li>متعدد پروگرامنگ لینگویجز کا سپورٹ</li>
+      <li>کمپیکٹ، وائرلیس اور پورٹیبل ڈیزائن</li>
+      <li>اعلیٰ معیار کا میکانیکل بلڈ اور سرو</li>
+    </ul>
   </section>
 
   <section>
-    <h2>Limitations</h2>
-    <ul>
+    <h2 data-lang="en">Limitations</h2>
+    <h2 data-lang="hi" class="lang-hidden">सीमाएं</h2>
+    <h2 data-lang="ur" class="lang-hidden">حدود</h2>
+    
+    <ul data-lang="en">
       <li>Relatively high cost</li>
       <li>Limited battery backup</li>
       <li>Older software (Ubuntu 16.04)</li>
       <li>Steep learning curve for advanced tasks</li>
       <li>Proprietary components harder to replace</li>
     </ul>
+    
+    <ul data-lang="hi" class="lang-hidden">
+      <li>अपेक्षाकृत उच्च लागत</li>
+      <li>सीमित बैटरी बैकअप</li>
+      <li>पुराना सॉफ़्टवेयर (Ubuntu 16.04)</li>
+      <li>उन्नत कार्यों के लिए कठिन शिक्षण वक्र</li>
+      <li>मालिकाना घटकों को बदलना कठिन</li>
+    </ul>
+    
+    <ul data-lang="ur" class="lang-hidden">
+      <li>نسبتاً زیادہ لاگت</li>
+      <li>محدود بیٹری بیک اپ</li>
+      <li>پرانا سافٹ ویئر (Ubuntu 16.04)</li>
+      <li>ایڈوانس ٹاسکس کے لیے سیکھنے کا مشکل منحنی</li>
+      <li>ملکیتی اجزاء کو تبدیل کرنا مشکل</li>
+    </ul>
   </section>
 
 </main>
+
 <footer>
-  Developer: Akash Gupta | 
-  <a href="https://www.linkedin.com/in/saysky2" target="_blank">LinkedIn</a> | 
-  <a href="https://github.com/saysky2" target="_blank">GitHub</a>
+  <p data-lang="en">
+    Developer: Akash Gupta | 
+    <a href="https://www.linkedin.com/in/saysky2" target="_blank">LinkedIn</a> | 
+    <a href="https://github.com/saysky2" target="_blank">GitHub</a>
+  </p>
+  <p data-lang="hi" class="lang-hidden">
+    डेवलपर: आकाश गुप्ता | 
+    <a href="https://www.linkedin.com/in/saysky2" target="_blank">LinkedIn</a> | 
+    <a href="https://github.com/saysky2" target="_blank">GitHub</a>
+  </p>
+  <p data-lang="ur" class="lang-hidden">
+    ڈیولپر: آکاش گپتا | 
+    <a href="https://www.linkedin.com/in/saysky2" target="_blank">LinkedIn</a> | 
+    <a href="https://github.com/saysky2" target="_blank">GitHub</a>
+  </p>
 </footer>
+
 </body>
 </html>
